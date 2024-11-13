@@ -1,0 +1,22 @@
+.form-container {
+  padding: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.error-message {
+  color: #f44336;
+  margin-top: 16px;
+  text-align: center;
+}

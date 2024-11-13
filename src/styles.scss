@@ -1,0 +1,60 @@
+// src/styles.scss
+
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$my-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$violet-palette,
+  ),
+));
+
+html {
+  // Emit theme-dependent styles for common features used across multiple components.
+  @include mat.core-theme($my-theme);
+
+  // Emit styles for MatButton based on `$my-theme`. Because the configuration
+  // passed to `define-theme` omits typography, `button-theme` will not
+  // emit any typography styles.
+  @include mat.button-theme($my-theme);
+
+  // Include the theme mixins for other components you use here.
+}
+
+// Global styles
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// Common Material overrides and utilities
+.mat-mdc-card {
+  margin: 16px;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+// Responsive container classes
+.container {
+  padding: 16px;
+  margin: 0 auto;
+  max-width: 1200px;
+
+  @media (max-width: 960px) {
+    max-width: 100%;
+  }
+}
+
+.container-sm {
+  @extend .container;
+  max-width: 800px;
+}

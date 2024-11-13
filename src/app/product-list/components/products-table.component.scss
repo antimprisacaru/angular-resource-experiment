@@ -1,0 +1,62 @@
+.table-container {
+  position: relative;
+  min-height: 200px;
+}
+
+table {
+  width: 100%;
+}
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  flex: 1;
+  margin-right: 16px;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border-radius: 4px;
+}
+
+.error-row-wrapper {
+  height: auto !important;
+  background-color: #fff8f8;
+}
+
+.error-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 8px;
+}
+
+.error-icon {
+  color: #f44336;
+}
+
+.error-message {
+  color: #666;
+  margin: 0 8px;
+}

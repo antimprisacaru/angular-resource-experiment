@@ -40,7 +40,7 @@ import { Category } from '../api/category.api';
     </div>
   `,
   styleUrl: './product-list.page.scss',
-  providers: [ProductsService, CategoryState],
+  providers: [CategoryState],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsPageComponent {

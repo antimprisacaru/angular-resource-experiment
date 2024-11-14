@@ -9,6 +9,7 @@ export class ProductsService {
 
   getProducts(request?: ProductRequest): Observable<ProductsResponse> {
     if (!request) {
+      // Nullable because products table component request doesn't fire right away
       return EMPTY;
     }
 

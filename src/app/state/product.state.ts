@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ProductsService } from '../services/product.service';
-import { EMPTY, filter, finalize, map, Observable, take, tap } from 'rxjs';
+import { catchError, EMPTY, filter, finalize, map, Observable, take, tap } from 'rxjs';
 import { Product, ProductDeleteResult, ProductInput } from '../api/product.api';
 import { ProductId } from '../app.routes';
 
@@ -50,7 +50,22 @@ export class ProductState {
       return EMPTY;
     }
 
-    return this.productsService.deleteProduct(productId);
+    // Resetting the error state and setting loading to true
+    this._mutationError.set(undefined);
+    this._mutationLoading.set(true);
+
+    return this.productsService.deleteProduct(productId).pipe(
+      catchError((e) => {
+        // Setting the mutation error
+        this._mutationError.set(e);
+        // Returning EMPTY because we want to break the stream
+        return EMPTY;
+      }),
+      finalize(() => {
+        // When stream finishes, loading will set to false
+        this._mutationLoading.set(false);
+      })
+    );
   }
 
   public updateProduct(input: ProductInput): Observable<Product> {
@@ -61,18 +76,46 @@ export class ProductState {
       return EMPTY;
     }
 
+    // Resetting the error state and setting loading to true
+    this._mutationError.set(undefined);
+    this._mutationLoading.set(true);
+
     return this.productsService.updateProduct(productId, input).pipe(
       take(1),
+      catchError((e) => {
+        // Setting the mutation error
+        this._mutationError.set(e);
+        // Returning EMPTY because we want to break the stream
+        return EMPTY;
+      }),
       // Changing the state without an actual refresh
-      tap((result) => this.productResource.update(oldProduct => ({ ...oldProduct, ...result })))
+      tap((result) => this.productResource.update(oldProduct => ({ ...oldProduct, ...result }))),
+      finalize(() => {
+        // When stream finishes, loading will set to false
+        this._mutationLoading.set(false);
+      })
     );
   }
 
   public createProduct(input: ProductInput): Observable<Product> {
+    // Resetting the error state and setting loading to true
+    this._mutationError.set(undefined);
+    this._mutationLoading.set(true);
+
     return this.productsService.createProduct(input).pipe(
       take(1),
+      catchError((e) => {
+        // Setting the mutation error
+        this._mutationError.set(e);
+        // Returning EMPTY because we want to break the stream
+        return EMPTY;
+      }),
       // Changing the state without an actual refresh
-      tap((result) => this.productResource.update(oldProduct => ({ ...oldProduct, ...result })))
+      tap((result) => this.productResource.update(oldProduct => ({ ...oldProduct, ...result }))),
+      finalize(() => {
+        // When stream finishes, loading will set to false
+        this._mutationLoading.set(false);
+      })
     );
   }
 }

@@ -120,11 +120,9 @@ export class ProductFormComponent {
     const input: ProductInput = this.form.getRawValue();
 
     // We can use iif for conditional stream branching - if there is a product, we must update; otherwise create.
-    iif(() => !!this.product, this.productState.updateProduct(input), this.productState.createProduct(input))
-      .pipe(take(1))
-      .subscribe((result) => {
-        this.dialogRef.close(result);
-      });
+    iif(() => !!this.product, this.productState.updateProduct(input), this.productState.createProduct(input)).subscribe((result) => {
+      this.dialogRef.close(result);
+    });
   }
 
   protected readonly categoryCompareWith = (a: Category, b: Category): boolean => a.slug === b.slug;

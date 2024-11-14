@@ -78,7 +78,7 @@ enum ProductTableColumns {
         <div class="table-header">
           <mat-form-field>
             <mat-label>Filter</mat-label>
-            <input matInput [(ngModel)]="searchFilter" placeholder="Search products..." #input />
+            <input matInput [(ngModel)]="searchFilter" placeholder="Search products..." />
           </mat-form-field>
 
           <button
@@ -155,7 +155,7 @@ enum ProductTableColumns {
 
           <!-- No Data Row -->
           <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{ input.value }}"</td>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data was found.</td>
           </tr>
         </table>
 

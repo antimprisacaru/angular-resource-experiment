@@ -123,6 +123,7 @@ export class ProductDetailsComponent {
         switchMap(() => this.state.deleteProduct()),
       )
       .subscribe(() => {
+        // Leaving the redirect within the component, because it's not really related to the state
         this.router.navigate(['..', 'list'], { relativeTo: this.route });
       });
   }
